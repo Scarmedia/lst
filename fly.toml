@@ -1,0 +1,31 @@
+app = "scar-media"
+primary_region = "fra"
+
+[vm]
+size = "shared-cpu-1x"
+
+[build]
+dockerfile = "Dockerfile"
+
+[env]
+NODE_ENV = "production"
+
+[http_service]
+internal_port = 8080
+force_https = true
+auto_stop_machines = false
+auto_start_machines = true
+min_machines_running = 1
+
+  [http_service.concurrency]
+  type = "connections"
+  hard_limit = 1000
+  soft_limit = 550
+
+[[mounts]]
+source = "data"
+destination = "/app/data"
+
+[[statics]]
+guest_path = "/dist"
+url_prefix = "/static"
